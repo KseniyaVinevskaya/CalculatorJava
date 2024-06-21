@@ -310,3 +310,5 @@ public class CalcController {
 Выполняем Get-запрос<br>
 ![Get](https://github.com/KseniyaVinevskaya/CalculatorJava/blob/main/images/image10.png)<br>
 <br>
+
+Автор работы: Виневская Ксения Игоревна
