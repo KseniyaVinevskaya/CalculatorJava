@@ -30,3 +30,5 @@ public class CalcController {
 <br>
 Запускаем сервис, по зеленой кнопке сверху справа в окне Intellij IDEA <br>
 Тестируем своё приложение по адресу http://localhost:8080/<адрес_и_параметры_для_2х_созданных_АПИ> <br>
+Сложение<br>
+  ![work+](https://github.com/KseniyaVinevskaya/CalculatorJava/blob/main/images/image1.png)<br>
