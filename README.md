@@ -184,4 +184,129 @@ spring.jpa.defer-datasource-initialization=true
 ```
 
 <br>
-Создаём файлы базы данных (DatabaseRes) и репозитория (RepositoryRes)
+Создаём файлы базы данных (DatabaseRes) и репозитория (RepositoryRes)<br>
+[!Repository](https://github.com/KseniyaVinevskaya/CalculatorJava/blob/main/images/image11.png)<br>
+
+Код базы данных<br>
+
+```
+package ru.neoflex.practice.DataBase;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity
+@Table(name = "DatabaseRes")
+public class DatabaseRes {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", nullable = false)
+    private int ID;
+
+    @Column(name = "first_number")
+    private int firstNum;
+
+    @Column(name = "action")
+    private String action;
+
+    @Column(name = "second_number")
+    private int secondNum;
+
+    @Column(name = "result")
+    private int result;
+
+    public DatabaseRes(int firstNum, String action, int secondNum, int result) {
+        this.firstNum = firstNum;
+        this.action = action;
+        this.secondNum = secondNum;
+        this.result = result;
+    }
+}
+```
+
+<br>
+Код репозитория
+<br>
+
+```
+package ru.neoflex.practice.Repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import ru.neoflex.practice.DataBase.DatabaseRes;
+
+import java.util.List;
+
+@Repository
+public interface RepositoryRes extends JpaRepository<DatabaseRes, Integer> {
+@Query("Select db from DatabaseRes db")
+List<DatabaseRes> findAllRes();
+}
+```
+
+<br>
+Изменнёный код контроллера
+<br>
+
+```
+package ru.neoflex.practice.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import ru.neoflex.practice.database.DatabaseRes;
+import ru.neoflex.practice.repository.RepositoryRes;
+
+import java.util.List;
+
+@RestController
+public class CalcController {
+
+    @Autowired
+    public RepositoryRes RepositoryRes;
+
+    @GetMapping("/plus/{a}/{b}")
+    public Integer Sum(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
+        RepositoryRes.save(new DatabaseRes(a,"+",b,a+b));
+        return a+b;
+    }
+
+    @GetMapping("/minus/{a}/{b}")
+    public Integer Min(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
+        RepositoryRes.save(new DatabaseRes(a,"-",b,a-b));
+        return a-b;
+    }
+    @GetMapping("/TableAll")////////////
+    public List<DatabaseRes> GetAllRes() {
+        return RepositoryRes.findAllRes();
+    }
+}
+```
+
+<br>
+
+Результат без записей<br>
+![Result1](https://github.com/KseniyaVinevskaya/CalculatorJava/blob/main/images/image7.png)<br>
+
+Результат с записями<br>
+![Result2](https://github.com/KseniyaVinevskaya/CalculatorJava/blob/main/images/image8.png)<br>
+<br> 
+
+
+## _**Задание №5 - Реализация GET-запроса**_ 
+
+
+<br>
+Переходим по ссылке http://localhost:8080/h2-console и вводим данные из application.properties<br>
+![Registr](https://github.com/KseniyaVinevskaya/CalculatorJava/blob/main/images/image9.png)<br>
+
+Выполняем Get-запрос<br>
+![Get](https://github.com/KseniyaVinevskaya/CalculatorJava/blob/main/images/image10.png)<br>
+<br>
