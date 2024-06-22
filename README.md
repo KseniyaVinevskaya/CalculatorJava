@@ -148,7 +148,7 @@ public class PracticeApplicationTests {
 ```
 
 Результаты тестов<br>
-![Test](https://github.com/KseniyaVinevskaya/CalculatorJava/blob/main/images/image6.png)<br>
+![Test](https://github.com/KseniyaVinevskaya/CalculatorJava/blob/main/images/image12.png)<br>
 
 
 ## _**Задание №4 - Подключение in-memory БД**_
