@@ -86,7 +86,7 @@ public class CalcController {
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.0.2</version>
+			<version>3.0.0</version>
 		</dependency>
 		<!-- TestNG Dependency-->
 		<dependency>
@@ -131,7 +131,7 @@ public class PracticeApplicationTests {
 
 	@Test
 	public void sum() throws Exception {
-		this.mockMvc.perform(get("/calc/plus/3/2"))
+		this.mockMvc.perform(get("/plus/3/2"))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().string("5"));
@@ -139,7 +139,7 @@ public class PracticeApplicationTests {
 
 	@Test
 	public void min() throws Exception {
-		this.mockMvc.perform(get("/calc/minus/5/3"))
+		this.mockMvc.perform(get("/minus/5/3"))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().string("2"));
@@ -190,7 +190,7 @@ spring.jpa.defer-datasource-initialization=true
 Код базы данных<br>
 
 ```
-package ru.neoflex.practice.DataBase;
+package ru.neoflex.practice.database;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -234,19 +234,19 @@ public class DatabaseRes {
 <br>
 
 ```
-package ru.neoflex.practice.Repository;
+package ru.neoflex.practice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import ru.neoflex.practice.DataBase.DatabaseRes;
+import ru.neoflex.practice.database.DatabaseRes;
 
 import java.util.List;
 
 @Repository
 public interface RepositoryRes extends JpaRepository<DatabaseRes, Integer> {
-@Query("Select db from DatabaseRes db")
-List<DatabaseRes> findAllRes();
+    @Query("Select db from DatabaseRes db")
+    List<DatabaseRes> findAllRes();
 }
 ```
 
@@ -270,22 +270,23 @@ import java.util.List;
 public class CalcController {
 
     @Autowired
-    public RepositoryRes RepositoryRes;
+    public RepositoryRes repositoryRes;
 
     @GetMapping("/plus/{a}/{b}")
-    public Integer Sum(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
-        RepositoryRes.save(new DatabaseRes(a,"+",b,a+b));
-        return a+b;
+    public Integer sum(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
+        repositoryRes.save(new DatabaseRes(a, "+", b, a + b));
+        return a + b;
     }
 
     @GetMapping("/minus/{a}/{b}")
-    public Integer Min(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
-        RepositoryRes.save(new DatabaseRes(a,"-",b,a-b));
-        return a-b;
+    public Integer min(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
+        repositoryRes.save(new DatabaseRes(a, "-", b, a - b));
+        return a - b;
     }
-    @GetMapping("/TableAll")////////////
-    public List<DatabaseRes> GetAllRes() {
-        return RepositoryRes.findAllRes();
+
+    @GetMapping("/TableAll")
+    public List<DatabaseRes> getAllRes() {
+        return repositoryRes.findAllRes();
     }
 }
 ```
