@@ -19,16 +19,16 @@ public class PracticeApplicationTests {
 	private MockMvc mockMvc;
 
 	@Test
-	public void Sum() throws Exception {
-		this.mockMvc.perform(get("/calc/plus/3/2"))
+	public void sum() throws Exception {
+		this.mockMvc.perform(get("/plus/3/2"))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().string("5"));
 	}
 
 	@Test
-	public void Difference() throws Exception {
-		this.mockMvc.perform(get("/calc/minus/5/3"))
+	public void min() throws Exception {
+		this.mockMvc.perform(get("/minus/5/3"))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().string("2"));
