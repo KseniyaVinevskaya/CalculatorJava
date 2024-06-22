@@ -13,21 +13,22 @@ import java.util.List;
 public class CalcController {
 
     @Autowired
-    public RepositoryRes RepositoryRes;
+    public RepositoryRes repositoryRes;
 
     @GetMapping("/plus/{a}/{b}")
-    public Integer Sum(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
-        RepositoryRes.save(new DatabaseRes(a,"+",b,a+b));
-        return a+b;
+    public Integer sum(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
+        repositoryRes.save(new DatabaseRes(a, "+", b, a + b));
+        return a + b;
     }
 
     @GetMapping("/minus/{a}/{b}")
-    public Integer Min(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
-        RepositoryRes.save(new DatabaseRes(a,"-",b,a-b));
-        return a-b;
+    public Integer min(@PathVariable("a") Integer a, @PathVariable("b") Integer b) {
+        repositoryRes.save(new DatabaseRes(a, "-", b, a - b));
+        return a - b;
     }
-    @GetMapping("/TableAll")////////////
-    public List<DatabaseRes> GetAllRes() {
-        return RepositoryRes.findAllRes();
+
+    @GetMapping("/TableAll")
+    public List<DatabaseRes> getAllRes() {
+        return repositoryRes.findAllRes();
     }
 }
